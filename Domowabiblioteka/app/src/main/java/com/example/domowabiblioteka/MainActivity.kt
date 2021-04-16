@@ -2,10 +2,7 @@ package com.example.domowabiblioteka
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +12,6 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.example.domowabiblioteka.BookInfo
-import com.example.domowabiblioteka.R
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.ArrayList
@@ -24,11 +19,11 @@ class MainActivity:AppCompatActivity() {
     // creating variables for our request queue,
     // array list, progressbar, edittext,
     // image button and our recycler view.
-    private lateinit var mRequestQueue:RequestQueue
-    private lateinit var bookInfoArrayList:ArrayList<BookInfo>
-    private lateinit var progressBar:ProgressBar
-    private lateinit var searchEdt:EditText
-    private lateinit var searchBtn:ImageButton
+     lateinit var mRequestQueue:RequestQueue
+     lateinit var bookInfoArrayList:ArrayList<BookInfo>
+     lateinit var progressBar:ProgressBar
+     lateinit var searchEdt:EditText
+     lateinit var searchBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,12 +31,12 @@ class MainActivity:AppCompatActivity() {
         progressBar = findViewById(R.id.idLoadingPB)
         searchEdt = findViewById(R.id.idEdtSearchBooks)
         searchBtn = findViewById(R.id.idBtnSearch)
-        // initializing on click listener for our button.
-        //searchBtn.setOnClickListener { view ->
-          //  func()
-       // }
+        searchBtn.setOnClickListener { view ->
+            func()
+        }
 
     }
+
     fun func(){
         progressBar.setVisibility(View.VISIBLE)
         // checking if our edittext field is empty or not.
@@ -128,3 +123,5 @@ class MainActivity:AppCompatActivity() {
         queue.add(booksObjrequest)
     }
 }
+
+     
