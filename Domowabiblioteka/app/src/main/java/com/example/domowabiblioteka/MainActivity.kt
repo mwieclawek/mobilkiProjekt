@@ -1,3 +1,5 @@
+package com.example.domowabiblioteka
+
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -35,20 +37,24 @@ class MainActivity:AppCompatActivity() {
         searchEdt = findViewById(R.id.idEdtSearchBooks)
         searchBtn = findViewById(R.id.idBtnSearch)
         // initializing on click listener for our button.
-        searchBtn.setOnClickListener(object:View.OnClickListener {
-            override fun onClick(v:View) {
-                progressBar.setVisibility(View.VISIBLE)
-                // checking if our edittext field is empty or not.
-                if (searchEdt.getText().toString().isEmpty())
-                {
-                    searchEdt.setError("Please enter search query")
-                    return
-                }
+        //searchBtn.setOnClickListener { view ->
+          //  func()
+       // }
 
-                getBooksInfo(searchEdt.getText().toString())
-            }
-        })
     }
+    fun func(){
+        progressBar.setVisibility(View.VISIBLE)
+        // checking if our edittext field is empty or not.
+        if (searchEdt.getText().toString().isEmpty())
+        {
+            searchEdt.setError("Please enter search query")
+            return
+        }
+
+        getBooksInfo(searchEdt.getText().toString())
+
+    }
+
     private fun getBooksInfo(query:String) {
         bookInfoArrayList = ArrayList<BookInfo>()
 
@@ -90,21 +96,17 @@ class MainActivity:AppCompatActivity() {
                                 authorsArrayList.add(authorsArray.optString(i))
                             }
                         }
-                        // after extracting all the data we are
+
                         // saving this data in our modal class.
                         val bookInfo = BookInfo(title, subtitle, authorsArrayList, publisher, publishedDate, description, pageCount, thumbnail, previewLink, infoLink, buyLink)
-                        // below line is use to pass our modal
-                        // class in our array list.
+
                         bookInfoArrayList.add(bookInfo)
-                        // below line is use to pass our
-                        // array list in adapter class.
+
                         val adapter = BookAdapter(bookInfoArrayList, this@MainActivity)
-                        // below line is use to add linear layout
-                        // manager for our recycler view.
+
                         val linearLayoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
                         val mRecyclerView = findViewById(R.id.idRVBooks) as RecyclerView
-                        // in below line we are setting layout manager and
-                        // adapter to our recycler view.
+
                         mRecyclerView.setLayoutManager(linearLayoutManager)
                         mRecyclerView.setAdapter(adapter)
                     }
