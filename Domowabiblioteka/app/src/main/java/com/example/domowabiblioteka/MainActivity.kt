@@ -48,7 +48,7 @@ class MainActivity:AppCompatActivity() {
             searchEdt.setError("Please enter search query")
             return
         }
-
+        else
         getBooksInfo(searchEdt.getText().toString())
 
     }
@@ -65,7 +65,6 @@ class MainActivity:AppCompatActivity() {
         val booksObjrequest = JsonObjectRequest(Request.Method.GET, url, null, object:Response.Listener<JSONObject> {
             override fun onResponse(response:JSONObject) {
                 progressBar.setVisibility(View.GONE)
-                // inside on response method we are extracting all our json data.
                 try
                 {
                     val itemsArray = response.getJSONArray("items")
@@ -95,7 +94,6 @@ class MainActivity:AppCompatActivity() {
                             }
                         }
 
-                        // saving this data in our modal class.
                         val bookInfo = BookInfo(title, subtitle, authorsArrayList, publisher, publishedDate, description, pageCount, thumbnail, previewLink, infoLink, buyLink)
 
                         bookInfoArrayList.add(bookInfo)

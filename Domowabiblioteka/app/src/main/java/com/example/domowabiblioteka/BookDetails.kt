@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.domowabiblioteka.R
 import com.squareup.picasso.Picasso
 import java.util.ArrayList
 class BookDetails:AppCompatActivity() {

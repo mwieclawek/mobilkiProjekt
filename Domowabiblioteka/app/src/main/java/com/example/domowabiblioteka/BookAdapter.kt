@@ -7,31 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domowabiblioteka.BookInfo
-import com.example.domowabiblioteka.R
+
 import com.squareup.picasso.Picasso
 import java.util.ArrayList
-class BookAdapter(bookInfoArrayList:ArrayList<BookInfo>, mcontext:Context):RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
-    private val bookInfoArrayList:ArrayList<BookInfo>
-    private val mcontext:Context
+class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context):RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    val getItemCount:Int
-        get() {
-            return bookInfoArrayList.size
-        }
-    init{
-        this.bookInfoArrayList = bookInfoArrayList
-        this.mcontext = mcontext
-    }
-    @NonNull
-    override fun onCreateViewHolder(@NonNull parent:ViewGroup, viewType:Int):BookViewHolder {
+
+    override fun onCreateViewHolder( parent:ViewGroup, viewType:Int):BookViewHolder {
         // inflating our layout for item of recycler view item.
         val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_rv_item, parent, false)
         return BookViewHolder(view)
     }
-    override fun onBindViewHolder(@NonNull holder:BookViewHolder, position:Int) {
+    override fun onBindViewHolder( holder:BookViewHolder, position:Int) {
         // inside on bind view holder method we are
         // setting ou data to each UI component.
         val bookInfo = bookInfoArrayList.get(position)
