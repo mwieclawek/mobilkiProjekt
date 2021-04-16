@@ -23,6 +23,7 @@ class MainActivity:AppCompatActivity() {
      lateinit var bookInfoArrayList:ArrayList<BookInfo>
      lateinit var progressBar:ProgressBar
      lateinit var searchEdt:EditText
+     lateinit var mRecyclerView:RecyclerView
      lateinit var searchBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,8 @@ class MainActivity:AppCompatActivity() {
         progressBar = findViewById(R.id.idLoadingPB)
         searchEdt = findViewById(R.id.idEdtSearchBooks)
         searchBtn = findViewById(R.id.idBtnSearch)
+        mRecyclerView = findViewById(R.id.idRVBooks)
+
         searchBtn.setOnClickListener { view ->
             func()
         }
@@ -100,7 +103,6 @@ class MainActivity:AppCompatActivity() {
                         val adapter = BookAdapter(bookInfoArrayList, this@MainActivity)
 
                         val linearLayoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-                        val mRecyclerView = findViewById(R.id.idRVBooks) as RecyclerView
 
                         mRecyclerView.setLayoutManager(linearLayoutManager)
                         mRecyclerView.setAdapter(adapter)
@@ -124,4 +126,3 @@ class MainActivity:AppCompatActivity() {
     }
 }
 
-     

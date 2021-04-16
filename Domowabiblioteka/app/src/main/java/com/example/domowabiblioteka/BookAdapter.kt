@@ -79,6 +79,6 @@ class BookAdapter(bookInfoArrayList:ArrayList<BookInfo>, mcontext:Context):Recyc
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return bookInfoArrayList.size
     }
 }
