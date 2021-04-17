@@ -19,7 +19,6 @@ class SearchActivity:AppCompatActivity() {
     // creating variables for our request queue,
     // array list, progressbar, edittext,
     // image button and our recycler view.
-     lateinit var mRequestQueue:RequestQueue
      lateinit var bookInfoArrayList:ArrayList<BookInfo>
      lateinit var progressBar:ProgressBar
      lateinit var searchEdt:EditText
@@ -62,13 +61,8 @@ class SearchActivity:AppCompatActivity() {
     private fun getBooksInfo(query:String) {
         bookInfoArrayList = ArrayList<BookInfo>()
 
-        mRequestQueue = Volley.newRequestQueue(this@SearchActivity)
-
-        mRequestQueue.getCache().clear()
         var url = "https://www.googleapis.com/books/v1/volumes?q=" + query
         url = url.replace(" ", "%20"); // encode spaces
-
-        val queue = Volley.newRequestQueue(this@SearchActivity)
 
         val booksObjrequest = JsonObjectRequest(Request.Method.GET, url, null, object:Response.Listener<JSONObject> {
             override fun onResponse(response:JSONObject) {
@@ -98,7 +92,7 @@ class SearchActivity:AppCompatActivity() {
                         {
                             for (j in 0 until authorsArray.length())
                             {
-                                authorsArrayList.add(authorsArray.optString(i))
+                                authorsArrayList.add(authorsArray.optString(j))
                             }
                         }
 
@@ -114,7 +108,7 @@ class SearchActivity:AppCompatActivity() {
                 catch (e:JSONException) {
                     e.printStackTrace()
                     // displaying a toast message when we get any error from API
-                    Toast.makeText(this@SearchActivity, "No Data Found" + e, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SearchActivity, "No Data Found " + e, Toast.LENGTH_SHORT).show()
                 }
             }
         }, object:Response.ErrorListener {
@@ -125,7 +119,7 @@ class SearchActivity:AppCompatActivity() {
         })
         // at last we are adding our json object
         // request in our request queue.
-        queue.add(booksObjrequest)
+        Singleton.enqueue(booksObjrequest)
     }
 }
 
