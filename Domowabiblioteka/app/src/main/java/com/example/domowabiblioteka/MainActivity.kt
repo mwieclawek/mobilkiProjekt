@@ -1,5 +1,6 @@
 package com.example.domowabiblioteka
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -24,7 +25,9 @@ class MainActivity:AppCompatActivity() {
      lateinit var progressBar:ProgressBar
      lateinit var searchEdt:EditText
      lateinit var mRecyclerView:RecyclerView
+     lateinit var mAdapter: BookAdapter
      lateinit var searchBtn: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +36,10 @@ class MainActivity:AppCompatActivity() {
         searchEdt = findViewById(R.id.idEdtSearchBooks)
         searchBtn = findViewById(R.id.idBtnSearch)
         mRecyclerView = findViewById(R.id.idRVBooks)
+        mAdapter = BookAdapter(ArrayList<BookInfo>(), this)
+
+        mRecyclerView.setLayoutManager(LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false))
+        mRecyclerView.setAdapter(mAdapter)
 
         searchBtn.setOnClickListener { view ->
             func()
@@ -59,7 +66,9 @@ class MainActivity:AppCompatActivity() {
         mRequestQueue = Volley.newRequestQueue(this@MainActivity)
 
         mRequestQueue.getCache().clear()
-        val url = "https://www.googleapis.com/books/v1/volumes?q=" + query
+        var url = "https://www.googleapis.com/books/v1/volumes?q=" + query
+        url = url.replace(" ", "%20"); // encode spaces
+
         val queue = Volley.newRequestQueue(this@MainActivity)
 
         val booksObjrequest = JsonObjectRequest(Request.Method.GET, url, null, object:Response.Listener<JSONObject> {
@@ -74,19 +83,19 @@ class MainActivity:AppCompatActivity() {
                         val volumeObj = itemsObj.getJSONObject("volumeInfo")
                         val title = volumeObj.optString("title")
                         val subtitle = volumeObj.optString("subtitle")
-                        val authorsArray = volumeObj.getJSONArray("authors")
+                        val authorsArray = volumeObj.optJSONArray("authors")
                         val publisher = volumeObj.optString("publisher")
                         val publishedDate = volumeObj.optString("publishedDate")
                         val description = volumeObj.optString("description")
                         val pageCount = volumeObj.optInt("pageCount")
                         val imageLinks = volumeObj.optJSONObject("imageLinks")
-                        val thumbnail = imageLinks.optString("thumbnail")
+                        val thumbnail = imageLinks?.optString("thumbnail") ?: ""
                         val previewLink = volumeObj.optString("previewLink")
                         val infoLink = volumeObj.optString("infoLink")
                         val saleInfoObj = itemsObj.optJSONObject("saleInfo")
-                        val buyLink = saleInfoObj.optString("buyLink")
+                        val buyLink = saleInfoObj?.optString("buyLink") ?: ""
                         val authorsArrayList = ArrayList<String>()
-                        if (authorsArray.length() !== 0)
+                        if (authorsArray != null)
                         {
                             for (j in 0 until authorsArray.length())
                             {
@@ -98,13 +107,10 @@ class MainActivity:AppCompatActivity() {
 
                         bookInfoArrayList.add(bookInfo)
 
-                        val adapter = BookAdapter(bookInfoArrayList, this@MainActivity)
 
-                        val linearLayoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-
-                        mRecyclerView.setLayoutManager(linearLayoutManager)
-                        mRecyclerView.setAdapter(adapter)
                     }
+                    mAdapter.bookInfoArrayList = bookInfoArrayList
+                    mAdapter.notifyDataSetChanged()
                 }
                 catch (e:JSONException) {
                     e.printStackTrace()

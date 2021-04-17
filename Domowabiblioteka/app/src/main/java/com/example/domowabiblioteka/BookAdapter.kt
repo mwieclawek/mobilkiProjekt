@@ -28,7 +28,8 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
         holder.pageCountTV.setText("No of Pages : " + bookInfo.pages)
         holder.dateTV.setText(bookInfo.publishedDate)
         // below line is use to set image from URL in our image view.
-        Picasso.get().load(bookInfo.thumbnail).into(holder.bookIV)
+        if (bookInfo.thumbnail.isNotEmpty())
+            Picasso.get().load(bookInfo.thumbnail).into(holder.bookIV)
         // below line is use to add on click listener for our item of recycler view.
         holder.itemView.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v:View) {
@@ -37,12 +38,15 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
                 val i = Intent(mcontext, BookDetails::class.java)
                 i.putExtra("title", bookInfo.title)
                 i.putExtra("subtitle", bookInfo.subtitle)
-                i.putExtra("authors", bookInfo.authors)
+                //i.putExtra("authors", bookInfo.authors)
                 i.putExtra("publisher", bookInfo.publisher)
                 i.putExtra("publishedDate", bookInfo.publishedDate)
                 i.putExtra("description", bookInfo.descprition)
                 i.putExtra("pageCount", bookInfo.pages)
                 i.putExtra("thumbnail", bookInfo.thumbnail)
+                i.putExtra("previewLink", bookInfo.previewLink)
+                i.putExtra("infoLink", bookInfo.infoLink)
+                i.putExtra("buyLink", bookInfo.buyLink)
                 // after passing that data we are
                 // starting our new intent.
                 mcontext.startActivity(i)
