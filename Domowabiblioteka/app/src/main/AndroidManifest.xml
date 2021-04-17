@@ -14,17 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DomowaBiblioteka"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BarcodeActivity"></activity>
-        <activity android:name=".MainActivity" android:launchMode="singleTop">
+        <activity android:name=".CollectionActivity" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BarcodeActivity" android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
+        </activity>
         <activity
             android:name=".BookDetails"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".SearchActivity" />
     </application>
 
 </manifest>
