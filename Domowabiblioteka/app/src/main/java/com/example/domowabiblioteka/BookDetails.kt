@@ -65,10 +65,13 @@ class BookDetails:AppCompatActivity() {
         publishDateTV.setText("Published On : " + publishedDate)
         descTV.setText(description)
         pageTV.setText("No Of Pages : " + pageCount)
-        Picasso.get().load(thumbnail).into(bookIV)
+
+        if (thumbnail.isNotEmpty())
+            Picasso.get().load(thumbnail).into(bookIV)
         // adding on click listener for our preview button.
         previewBtn.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v:View) {
+                println(previewLink)
                 if (previewLink.isEmpty())
                 {
                     // below toast message is displayed when preview link is not present.
