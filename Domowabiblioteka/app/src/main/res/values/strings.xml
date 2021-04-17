@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Domowa biblioteka</string>
     <string name="searchButton">Szukaj</string>
+    <string name="buttonSearch">Szukaj książki</string>
+    <string name="buttonCollection">Kolekcja</string>
+    <string name="buttonScan">Skanuj ISBN</string>
 </resources>

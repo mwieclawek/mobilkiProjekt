@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/idLLsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <!--edit text for getting the search
-            query for book from user-->
-        <EditText
-            android:id="@+id/idEdtSearchBooks"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4" />
+        android:orientation="vertical"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/idBtnSearch"
-            android:layout_width="0dp"
+            android:id="@+id/buttonSearch"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:onClick="openSearch"
+            android:text="@string/buttonSearch" />
 
+        <Button
+            android:id="@+id/buttonCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:onClick="openCollection"
+            android:text="@string/buttonCollection" />
 
+        <Button
+            android:id="@+id/buttonScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="openScan"
+            android:text="@string/buttonScan" />
     </LinearLayout>
 
-    <!--recycler view for displaying our list of books-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVBooks"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/idLLsearch" />
-
-    <!--progressbar for displaying our loading indicator-->
-    <ProgressBar
-        android:id="@+id/idLoadingPB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible" />
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
