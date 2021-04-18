@@ -121,5 +121,11 @@ class SearchActivity:AppCompatActivity() {
         // request in our request queue.
         Singleton.enqueue(booksObjrequest)
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (searchEdt.getText().toString().isNotEmpty())
+            getBooksInfo(searchEdt.getText().toString())
+    }
 }
 

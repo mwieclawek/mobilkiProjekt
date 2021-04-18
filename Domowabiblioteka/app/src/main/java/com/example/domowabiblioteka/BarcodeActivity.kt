@@ -48,7 +48,7 @@ class BarcodeActivity : Activity(), ZXingScannerView.ResultHandler {
     override fun handleResult(rawResult: Result?) {
 
         if (rawResult != null) {
-            println(rawResult.getText()) // Prints scan results
+            //println(rawResult.getText()) // Prints scan results
             Toast.makeText(this@BarcodeActivity, "Fetching data from internet...", Toast.LENGTH_SHORT).show()
             getBookInfo(rawResult.getText())
             //println(rawResult.getBarcodeFormat().toString()) // Prints the scan format (qrcode, pdf417 etc.)
@@ -123,7 +123,7 @@ class BarcodeActivity : Activity(), ZXingScannerView.ResultHandler {
         //i.putExtra("authors", bookInfo.authors)
         i.putExtra("publisher", bookInfo.publisher)
         i.putExtra("publishedDate", bookInfo.publishedDate)
-        i.putExtra("description", bookInfo.descprition)
+        i.putExtra("description", bookInfo.description)
         i.putExtra("pageCount", bookInfo.pages)
         i.putExtra("thumbnail", bookInfo.thumbnail)
         i.putExtra("previewLink", bookInfo.previewLink)
