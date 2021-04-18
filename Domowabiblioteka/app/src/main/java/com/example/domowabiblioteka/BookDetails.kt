@@ -32,7 +32,11 @@ class BookDetails:AppCompatActivity() {
     internal lateinit var publishDateTV:TextView
     internal lateinit var previewBtn:Button
     internal lateinit var buyBtn:Button
+    internal lateinit var databaseBtn:Button
     private lateinit var bookIV:ImageView
+
+    internal lateinit var bookInfo: BookInfo
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_details)
@@ -45,6 +49,7 @@ class BookDetails:AppCompatActivity() {
         publishDateTV = findViewById(R.id.idTVPublishDate)
         previewBtn = findViewById(R.id.idBtnPreview)
         buyBtn = findViewById(R.id.idBtnBuy)
+        databaseBtn = findViewById(R.id.buttonDatabase)
         bookIV = findViewById(R.id.idIVbook)
         // getting the data which we have passed from our adapter class.
         title = getIntent().getStringExtra("title").toString()
@@ -66,12 +71,35 @@ class BookDetails:AppCompatActivity() {
         descTV.setText(description)
         pageTV.setText("No Of Pages : " + pageCount)
 
+        bookInfo = BookInfo(title,subtitle,ArrayList(),publisher,publishedDate,description,pageCount,thumbnail,previewLink,infoLink,buyLink)
+
+        if (checkIfExists())
+        {
+            databaseBtn.setText("Remove from Collection")
+            databaseBtn.setOnClickListener(object: View.OnClickListener {
+                override fun onClick(v: View) {
+                    removeRecord()
+                    finish()
+                }
+            })
+        }
+        else
+        {
+            databaseBtn.setText("Save in Collection")
+            databaseBtn.setOnClickListener(object: View.OnClickListener {
+                override fun onClick(v: View) {
+                    saveRecord()
+                    finish()
+                }
+            })
+        }
+
+
         if (thumbnail.isNotEmpty())
             Picasso.get().load(thumbnail).into(bookIV)
         // adding on click listener for our preview button.
         previewBtn.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v:View) {
-                println(previewLink)
                 if (previewLink.isEmpty())
                 {
                     // below toast message is displayed when preview link is not present.
@@ -101,5 +129,20 @@ class BookDetails:AppCompatActivity() {
                 startActivity(i)
             }
         })
+    }
+
+    // checks if book exists in user collection
+    fun checkIfExists(): Boolean{
+        return Singleton.getDatabaseHandler().checkIfBookExists(bookInfo)
+    }
+
+    // saves record in database
+    fun saveRecord(){
+        Singleton.getDatabaseHandler().addBook(bookInfo)
+    }
+
+    // deletes record from database
+    fun removeRecord(){
+        Singleton.getDatabaseHandler().deleteBook(bookInfo)
     }
 }

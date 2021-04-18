@@ -127,5 +127,12 @@
                 android:textAllCaps="false" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="Save/Remove from Collection" />
     </LinearLayout>
 </ScrollView>

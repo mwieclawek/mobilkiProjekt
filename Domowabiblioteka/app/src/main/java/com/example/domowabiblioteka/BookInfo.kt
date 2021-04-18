@@ -10,7 +10,6 @@ class BookInfo() {
     lateinit var authors: ArrayList<String>
     lateinit var publisher: String
     lateinit var publishedDate:String
-    var descprition:String=""
     lateinit var thumbnail: String
     var pages=0
 constructor(title: String,

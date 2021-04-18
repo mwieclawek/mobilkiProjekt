@@ -2,6 +2,7 @@ package com.example.domowabiblioteka
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,11 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
         holder.publisherTV.setText(bookInfo.publisher)
         holder.pageCountTV.setText("No of Pages : " + bookInfo.pages)
         holder.dateTV.setText(bookInfo.publishedDate)
+
+        val existsInCollection = Singleton.getDatabaseHandler().checkIfBookExists(bookInfo)
+        holder.inCollectionTV.text = (if (existsInCollection) "\u2713" else "\u2717")
+        holder.inCollectionTV.setTextColor(if (existsInCollection) Color.GREEN else Color.RED)
+
         // below line is use to set image from URL in our image view.
         if (bookInfo.thumbnail.isNotEmpty())
             Picasso.get().load(bookInfo.thumbnail).into(holder.bookIV)
@@ -41,7 +47,7 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
                 //i.putExtra("authors", bookInfo.authors)
                 i.putExtra("publisher", bookInfo.publisher)
                 i.putExtra("publishedDate", bookInfo.publishedDate)
-                i.putExtra("description", bookInfo.descprition)
+                i.putExtra("description", bookInfo.description)
                 i.putExtra("pageCount", bookInfo.pages)
                 i.putExtra("thumbnail", bookInfo.thumbnail)
                 i.putExtra("previewLink", bookInfo.previewLink)
@@ -60,6 +66,7 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
         internal var publisherTV:TextView
         internal var pageCountTV:TextView
         internal var dateTV:TextView
+        internal var inCollectionTV:TextView
         internal var bookIV:ImageView
         init{
             nameTV = itemView.findViewById(R.id.idTVBookTitle)
@@ -67,6 +74,7 @@ class BookAdapter(var bookInfoArrayList:ArrayList<BookInfo>,val mcontext:Context
             pageCountTV = itemView.findViewById(R.id.idTVPageCount)
             dateTV = itemView.findViewById(R.id.idTVDate)
             bookIV = itemView.findViewById(R.id.idIVbook)
+            inCollectionTV = itemView.findViewById(R.id.idTVinCollection)
         }
     }
 
